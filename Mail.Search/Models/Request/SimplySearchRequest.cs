@@ -2,6 +2,5 @@
 {
     public class SimplySearchRequest : SearchRequest
     {
-        public string TextSearch { get; set; }
     }
 }

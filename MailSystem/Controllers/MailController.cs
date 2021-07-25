@@ -2,6 +2,7 @@
 using Mail.Search.Models;
 using MailSystem.Implementation;
 using MailSystem.Interfaces;
+using MailSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -27,8 +28,7 @@ namespace MailSystem.Controllers
         [Route("search")]
         public IActionResult Search(SearchRequest request)
         {
-            var searchProcessor = _searchManager.GenerateProcessor(request).Search(request);
-            return Ok();
+            return Ok(_searchManager.GenerateProcessor(request).Search(request));
         }
         #endregion
 
@@ -83,17 +83,17 @@ namespace MailSystem.Controllers
 
         [HttpPost]
         [Route("custom/move")]
-        public IActionResult MoveDirectory(CustomDirectory origin, CustomDirectory destiny)
+        public IActionResult MoveDirectory(MoveDirectory request)
         {
-            _organizeManager.MoveDirectory(origin, destiny);
+            _organizeManager.MoveDirectory(request.origin, request.destiny);
             return Ok();
         }
 
         [HttpPost]
         [Route("moveMail")]
-        public IActionResult MoveMailDirectory(Mail.Data.Models.Mail mail, CustomDirectory origin, CustomDirectory destiny)
+        public IActionResult MoveMailDirectory(MoveMailRequest request)
         {
-            _organizeManager.MoveMailDirectory(mail, origin, destiny);
+            _organizeManager.MoveMailDirectory(request.mail, request.origin, request.destiny);
             return Ok();
         }
         #endregion
